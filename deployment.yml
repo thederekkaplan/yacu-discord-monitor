@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yacu-discord-monitor
+spec:
+  selector:
+    matchLabels:
+      app: yacu-discord-monitor
+  template:
+    metadata:
+      labels:
+        app: yacu-discord-monitor
+    spec:
+      containers:
+      - name: yacu-discord-monitor
+        image: yacu-discord-monitor:latest
+        imagePullPolicy: Never

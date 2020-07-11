@@ -1,6 +1,7 @@
 import discord
 import google.auth
 from googleapiclient import discovery
+from google.cloud import secretmanager
 
 SHEET_ID = '1Ocg86emlSVShZZQ-GPuS6YZ6miGotZZPRgKdlUlRCvw'
 
@@ -10,6 +11,10 @@ creds, project = google.auth.default(scopes=['https://www.googleapis.com/auth/sp
 svc = discovery.build('sheets', 'v4', credentials=creds)
 sheets = svc.spreadsheets()
 print(project)
+
+manager = secretmanager.SecretManagerServiceClient()
+
+secret = manager.access_secret_version('projects/commanding-way-273100/secrets/discord/versions/latest')
 
 
 @client.event
@@ -71,4 +76,4 @@ async def delete_member(member):
 
 	req.execute()
 
-client.run('NzMwODgxMzUyMTMxNDEyMDY4.XweAcQ.Tk6euolaUe43CeGQngEwbcZPZk4')
+client.run(secret.payload.data.decode('UTF-8'))
